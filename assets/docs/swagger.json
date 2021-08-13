@@ -1,0 +1,1116 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "version": "1.0.0",
+    "title": "Swagger Petstore",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more about our store",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "Provider",
+      "description": "Everything about provider",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "Appointment",
+      "description": "Access to Petstore orders"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/admin/provider": {
+      "post": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Add a new Provider",
+        "description": "",
+        "operationId": "addProvider",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+               },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Provider object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addProvider"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Update an existing Provider",
+        "description": "",
+        "operationId": "updateProvider",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+               },{
+            "in": "body",
+            "name": "body",
+            "description": "updateProvider object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateProvider"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "get all Provider",
+        "description": "",
+        "operationId": "getProvider",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+          },
+          {
+            "in": "query",
+            "name": "searchdata",
+            "description": "get providet",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/admin/provider/{id}": {
+      "get": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Finds Pets by status",
+        "description": "Multiple status values can be provided with comma separated strings",
+        "operationId": "findProvidebyd",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "searchdata",
+            "description": "get providet",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Pet"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/admin/provider/practiceDetails": {
+      "post": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Add a new Provider",
+        "description": "",
+        "operationId": "addProviderPractice",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "searchdata",
+            "description": "get providet",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Provider object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addProviderPractice"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Provider"
+        ],
+        "summary": "Add a new Provider",
+        "description": "",
+        "operationId": "updateProviderPractice",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Provider object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateProviderPractice"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/appointments": {
+      "post": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "Book appointment",
+        "description": "Book appointment",
+        "operationId": "bookAppointment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+           {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+          },
+           {
+            "name": "appointmentDate",
+            "in": "formData",
+            "description": "appointmentDate",
+            "required": true,
+            "type": "string",
+            "example":"2021-08-13"
+          },
+          {
+            "name": "appointmentTime",
+            "in": "formData",
+            "description": "appointmentTime",
+            "required": true,
+            "type": "integer",
+             "example":"123456789"
+          },
+          {
+            "name": "appointmentType",
+            "in": "formData",
+            "description": "appointmentType",
+            "required": true,
+            "type": "string",
+             "example":"free"
+          },
+          {
+            "name": "provider",
+            "in": "formData",
+            "description": "providerId",
+            "required": true,
+            "type": "string",
+            "example":"shshssjsjjsso128282"
+          },
+          {
+            "name": "total",
+            "in": "formData",
+            "description": "total",
+            "required": true,
+            "type": "integer",
+             "example":"0"
+          }
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Appointment"
+        ],
+        "summary": "get appointments",
+        "description": "get appointments",
+        "operationId": "getAppointment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+           {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+          },
+           {
+            "name": "searchValue",
+            "in": "query",
+            "description": "searchValue",
+            "required": false,
+            "type": "string",
+            "example":""
+          }  
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/user/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/addUser"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user deteails",
+        "description": "",
+        "operationId": "updateUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "addUser object",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/addUser"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "The user name for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            },
+            "headers": {
+              "X-Rate-Limit": {
+                "type": "integer",
+                "format": "int32",
+                "description": "calls per hour allowed by the user"
+              },
+              "X-Expires-After": {
+                "type": "string",
+                "format": "date-time",
+                "description": "date in UTC when token expires"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/forgot": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logs out current logged in user session",
+        "description": "",
+        "operationId": "logoutUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "description": "The user name for login",
+            "required": true,
+            "type": "object",
+            "example":{"email":"testskm@gmail.com"}
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/reset-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Reset password",
+        "description": "",
+        "operationId": "reset-password",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "reset_token",
+            "in": "formData",
+            "description": "reset_token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "new_password",
+            "in": "formData",
+            "description": "new_password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "new_password_confirm",
+            "in": "formData",
+            "description": "new_password_confirm",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by user name",
+        "description": "",
+        "operationId": "getUserByName",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+                  "name":"access_token",
+                  "in":"header",
+                  "description":"Access token received in signin API response",
+                  "required":true,
+                  "type":"string",
+                  "default":""
+         }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updated user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "name that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteUser",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "userStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "User Status"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Tag"
+      }
+    },
+    "addProvider": {
+      "type": "object",
+      "required": [
+       	"email", "firstName",  "lastName", "gender", "password", "dateOfBirth", "address"
+      ],
+      "properties": {
+        "email": {
+          "type": "email",
+           "example": "test@gmail.com"
+        },
+        "password": {
+          "type": "password",
+           "example": "password"
+        },
+        "firstName": {
+          "type": "string",
+           "example": "surendra"
+        },
+        "lastName": {
+          "type": "string",
+           "example": "maurya"
+        },
+        "gender": {
+          "type": "string",
+           "example": "male"
+        },
+        "dateOfBirth": {
+          "type": "string",
+           "example": "2020-11-11"
+        },
+        "address": {
+          "type": "object",
+           "example": {"city":"noida"}
+        },
+        "providerTrainingDetails":{
+        	"type":"array",
+        	"example":[{"educationType":"test", "schoolName":"knit", "yearStarted":2020, "yearCompleted":"2021"}]
+        },
+        "providerDegreeDetails":{
+               "type":"array",
+               "example":[{"educationType":"test", "schoolName":"knit", "yearStarted":2020, "yearCompleted":"2021"}]
+        },
+        "providerMedicalSpecialities":{
+              "type":"object",
+              "example":{"medicalCredential":"MD",
+              "medicalSpeciality":"dentist"}
+        }
+
+      },
+      "xml": {
+        "name": "addProvider"
+      }
+    },
+    "updateProvider": {
+      "type": "object",
+      "required": [
+       	"email", "firstName",  "lastName", "gender", "password", "dateOfBirth", "address"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+           "example": "djddjdjjdjdjdj"
+        },
+       "firstName": {
+          "type": "string",
+           "example": "surendra"
+        },
+        "lastName": {
+          "type": "string",
+           "example": "maurya"
+        },
+        "gender": {
+          "type": "string",
+           "example": "male"
+        },
+        "dateOfBirth": {
+          "type": "string",
+           "example": "2020-11-11"
+        },
+        "address": {
+          "type": "object",
+           "example": {"city":"noida"}
+        },
+        "providerTrainingDetails":{
+        	"type":"array",
+        	"example":[{"educationType":"test", "schoolName":"knit", "yearStarted":2020, "yearCompleted":"2021"}]
+        },
+        "providerDegreeDetails":{
+               "type":"array",
+               "example":[{"educationType":"test", "schoolName":"knit", "yearStarted":2020, "yearCompleted":"2021"}]
+        },
+         "providerMedicalSpecialities":{
+              "type":"object",
+              "example":{"medicalCredential":"MD",
+              "medicalSpeciality":"dentist"}
+        }
+      },
+      "xml": {
+        "name": "addProvider"
+      }
+    },
+    "addUser": {
+      "type": "object",
+      "required": [
+       	"email", "firstName",  "lastName", "gender", "password", "dateOfBirth", "address"
+      ],
+      "properties": {
+        "email": {
+          "type": "email",
+           "example": "test@gmail.com"
+        },
+        "password": {
+          "type": "password",
+           "example": "password"
+        },
+        "firstName": {
+          "type": "string",
+           "example": "surendra"
+        },
+        "lastName": {
+          "type": "string",
+           "example": "maurya"
+        },
+        "gender": {
+          "type": "string",
+           "example": "male"
+        },
+        "dateOfBirth": {
+          "type": "string",
+           "example": "2020-11-11"
+        },
+        "address": {
+          "type": "object",
+           "example": {"city":"noida"}
+        }
+
+      },
+      "xml": {
+        "name": "addProvider"
+      }
+    },
+    "updateUser": {
+      "type": "object",
+      "required": [
+       	"email", "firstName",  "lastName", "gender", "password", "dateOfBirth", "address"
+      ],
+      "properties": {
+        "email": {
+          "type": "email",
+           "example": "test@gmail.com"
+        },
+        "password": {
+          "type": "password",
+           "example": "password"
+        },
+        "firstName": {
+          "type": "string",
+           "example": "surendra"
+        },
+        "lastName": {
+          "type": "string",
+           "example": "maurya"
+        },
+        "gender": {
+          "type": "string",
+           "example": "male"
+        },
+        "dateOfBirth": {
+          "type": "string",
+           "example": "2020-11-11"
+        },
+        "address": {
+          "type": "object",
+           "example": {"city":"noida"}
+        }
+
+      },
+      "xml": {
+        "name": "addProvider"
+      }
+    },
+    "addProviderPractice":{
+    	"type": "object",
+      "required": [
+       	"email", "provider",  "location"
+      ],
+      "properties": {
+        "provider": {
+          "type": "provider",
+           "example": "id of provider"
+        },
+        "location": {
+          "type": "string",
+           "example": "noida sec-12"
+        },
+        "timezone": {
+          "type": "string",
+           "example": "Asia/Kolkata"
+        },
+        "startDate": {
+          "type": "string",
+           "example": "2021-08-12"
+        },
+        "endDate": {
+          "type": "string",
+           "example": "2022-08-12"
+        },
+        "slotsTimes": {
+          "type": "array",
+           "example": [{"day":1, "start":123456, "end":12347, "padding":15}, {"day":1, "start":123456, "end":12347, "padding":15}]
+        }
+      },
+      "xml": {
+        "name": "addProvider"
+      }
+    },
+    "updateProviderPractice":{
+    	"type": "object",
+      "required": [
+       	"email", "provider",  "location"
+      ],
+      "properties": {
+        "provider": {
+          "type": "provider",
+           "example": "id of provider"
+        },
+        "location": {
+          "type": "string",
+           "example": "noida sec-12"
+        },
+        "timezone": {
+          "type": "string",
+           "example": "Asia/Kolkata"
+        },
+        "startDate": {
+          "type": "string",
+           "example": "2021-08-12"
+        },
+        "endDate": {
+          "type": "string",
+           "example": "2022-08-12"
+        },
+        "slotsTimes": {
+          "type": "array",
+           "example": [{"day":1, "start":123456, "end":12347, "padding":15}, {"day":1, "start":123456, "end":12347, "padding":15}]
+        }
+      },
+      "xml": {
+        "name": "addProvider"
+      }
+    },   "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
