@@ -7,10 +7,10 @@
 
 const book = async function (req, res) {
      try{
+	const value = await Validations.AppointmentSchema.appointmentBookSchema.validateAsync(req.body);
 	const data = { appointmentDate, appointmentTime, appointmentType, discount, total, paymentDetails, disountDetails, patientTimeZone, provider}  = req.body;
 	data.patient = req.decoded.userId;
 	data.isActive = 1;
-	//if(AppointmentManager.checkProviderAvailbility(data) == false){     
 	let appointmentData = await Appointment.create(data);
 	return res.ok({
 	    msg: 'Appointment booked successfulyy',
@@ -18,7 +18,7 @@ const book = async function (req, res) {
 	    code: 200
 	});	
      }catch(err){
-      	return res.badRequest(err);
+      	return res.badRequest(Utils.jsonError(err));
 
      }
 }

@@ -6,6 +6,9 @@ module.exports = {
 	 * @returns {{err_msg: {string}}}
 	 */
 	jsonError(errorMessage, details="") {
+	        if(errorMessage && errorMessage.details){
+	            errorMessage = errorMessage.details[0]["message"]
+	        }
 		return {
 			err_msg: errorMessage,details
 		};
