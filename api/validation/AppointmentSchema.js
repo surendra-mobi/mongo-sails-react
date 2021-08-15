@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const appointmentBookSchema = Joi.object({
+const book = Joi.object({
 	appointmentDate: Joi.date().required(),
 	appointmentTime: Joi.number().required(),
 	appointmentType:Joi.string().required(),
@@ -9,7 +9,7 @@ const appointmentBookSchema = Joi.object({
 });
 
 module.exports = {
-	appointmentBookSchema,
+	book,
 }
 
 

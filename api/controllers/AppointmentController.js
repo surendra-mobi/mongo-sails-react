@@ -7,7 +7,7 @@
 
 const book = async function (req, res) {
      try{
-	const value = await Validations.AppointmentSchema.appointmentBookSchema.validateAsync(req.body);
+	const isValid = await Validations.AppointmentSchema.book.validateAsync(req.body);
 	const data = { appointmentDate, appointmentTime, appointmentType, discount, total, paymentDetails, disountDetails, patientTimeZone, provider}  = req.body;
 	data.patient = req.decoded.userId;
 	data.isActive = 1;

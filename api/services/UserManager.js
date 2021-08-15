@@ -17,32 +17,6 @@ function doesUsernameExist(email) {
 	});
 }
 
-function updateUserLockState(user, done) {
-	const now = moment().utc();
-
-	let prevFailure = null;
-	if (user.lastPasswordFailure) {
-		prevFailure = moment(user.lastPasswordFailure);
-	}
-
-	if (prevFailure !== null && now.diff(prevFailure, 'seconds') < LOCK_INTERVAL_SEC) {
-		user.passwordFailures += 1;
-
-		// lock if this is the 4th incorrect attempt
-		if (user.passwordFailures >= LOCK_TRY_COUNT) {
-			user.locked = true;
-		}
-	}
-	else {
-		// reset the failed attempts
-		user.passwordFailures = 1;
-	}
-
-	user.lastPasswordFailure = now.toDate();
-	user.save(done);
-}
-
-
 
 const createUser = (values) => {
 		const email = values.email;
@@ -226,6 +200,7 @@ const getIds = function (search, model) {
 		});
 }
 module.exports = {
+	doesUsernameExist,
 	resetPasswordByResetToken,
 	changePassword,
 	generateResetToken,

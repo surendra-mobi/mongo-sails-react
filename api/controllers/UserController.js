@@ -7,9 +7,8 @@
 const ERROR_TEXT = require('../constants').MESSAGE;
 const signup = async function(req, res) {
     try {
-                let result = await User.findOne({
-                    email: req.body.email
-                });
+                const isValid = await Validations.UserSchema.signup.validateAsync(req.body);
+                let result = await UserManager.doesUsernameExist(req.body.email);
                 if(result){
                 	throw "Email already exists";
                 }
@@ -27,15 +26,14 @@ const signup = async function(req, res) {
                     },
                     status:true
                 });
-    } catch (error) {
-        return res.badRequest({error});
+    } catch (error) { console.log(error);
+	return res.badRequest(Utils.jsonError(error));
     }
 }
 const create = async function(req, res) {
     try {
-               let result = await User.findOne({
-                    email: req.body.email
-                });
+                const isValid = await Validations.UserSchema.signup.validateAsync(req.body);
+                let result = await UserManager.doesUsernameExist(req.body.email);
                 if(result){
                 	throw "Email already exists";
                 }
@@ -54,13 +52,13 @@ const create = async function(req, res) {
                     status:true
                 });
     } catch (error) {
-        return res.badRequest({error});
+        return res.badRequest(Utils.jsonError(error));
     }
 }
 
 const update = async function(req, res) {
     try {
-        	
+
                 let id = req.params.id;
                 if (!id) {
                     throw "Please provider user id";
@@ -154,18 +152,13 @@ const get = async function(req, res) {
 
 const login = async (req, res) => {
     try{
-        if (!req.body) {
-            throw "Empty body";
-        }
+        const isValid = await Validations.UserSchema.login.validateAsync(req.body);	
         const email = req.body.email;
         const password = req.body.password;
-        if (!password) {
-            throw "Invalid email or password";
-        }
         let data = await UserManager.authenticateUserByPassword(email, password);
         res.ok(data);
-    } catch (error) { console.log(error);
-        return res.badRequest({error});
+    } catch (error) { 
+    	return res.badRequest(Utils.jsonError(error));
     }
 }
 
@@ -184,9 +177,6 @@ const forgotPassword = function(req, res) {
             });
         })
         .catch(err => {
-            if (err === ERROR_TEXT.USER_NOT_FOUND) {
-                return res.notFound(Utils.jsonError('User not found'));
-            }
             return res.serverError(Utils.jsonError(err));
         });
     } catch (error) {
